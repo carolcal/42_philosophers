@@ -6,24 +6,32 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:20:57 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/10 18:03:28 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:53:00 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+int	ft_atoi(const char *nptr)
 {
-	size_t			i;
-	unsigned char	*ptr;
+	int	num;
+	int	sin;
 
-	i = 0;
-	ptr = s;
-	while (i < n)
+	num = 0;
+	sin = 1;
+	while (*nptr == ' ' || (*nptr >= 9 && *nptr <= 13))
+		nptr++;
+	if (*nptr == '+')
+		nptr++;
+	else if (*nptr == '-')
 	{
-		ptr[i] = c;
-		i++;
+		sin = -1;
+		nptr ++;
 	}
-	return (s);
+	while (*nptr >= 48 && *nptr <= 57)
+	{
+		num = (num * 10) + (*nptr - '0');
+		nptr++;
+	}
+	return (num * sin);
 }
-

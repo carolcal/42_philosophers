@@ -6,7 +6,7 @@
 #    By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:32:34 by cayamash          #+#    #+#              #
-#    Updated: 2025/02/10 17:51:48 by cayamash         ###   ########.fr        #
+#    Updated: 2025/02/12 17:43:38 by cayamash         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@
 NAME = philosophers
 
 #Compilers and flags
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -pthread -g3
 
 #Directories
 SRC_DIR = src/
@@ -23,7 +23,7 @@ OBJ_DIR = obj/
 INCLUDES = -I include/ -I src/ -I .
 
 #Source files and object file
-SRC = $(addprefix $(SRC_DIR), utils.c printf.c main.c)
+SRC = $(addprefix $(SRC_DIR), utils.c init.c start.c main.c)
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 #Valgrind
