@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:51:07 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/12 17:38:56 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:30:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void *routine(void *arg)
 	return (NULL);
 }
 
-void	start_eating(t_data *data)
+void	start_threads(t_data *data, pthread_t *monitoring)
 {
 	int				i;
 	struct timeval	init;
@@ -38,19 +38,15 @@ void	start_eating(t_data *data)
 	{
 		if (pthread_create(&data->philos[i].thread_id, NULL, routine, (void *)&data->philos[i]) != 0)
 		 	handle_error(THREAD_CREATE);
-		if (pthread_join(data->philos[i].thread_id, NULL) != 0)
-			handle_error(THREAD_JOIN);
 		i++;
 	}
+    if (pthread_create(monitoring, NULL, start_monitor, (void *)data));
+        handle_error(THREAD_CREATE);
 }
 
-	// pthread_t p1, p2;
-
-	// if (pthread_create(&p1, NULL, &routine, NULL) != 0)
-	// 	return (1);
-	// if (pthread_create(&p2, NULL, &routine, NULL) != 0)
-	// 	return (2);
-	// if (pthread_join(p1, NULL) != 0)
-	// 	return (3);
-	// if (pthread_join(p1, NULL) != 0)
-	// 	return (4);
+void    start(t_data *data)
+{
+    pthread_t monitoring;
+    
+    start_threads(data, &monitoring)
+}

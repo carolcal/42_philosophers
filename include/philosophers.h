@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:12 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/12 17:41:48 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:35:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,26 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	int			id;
+	int			last_meal;
 	int			meals;
 	t_fork		*r_fork;
 	t_fork		*l_fork;
 	pthread_t	thread_id;
 	t_mtx		state;
+    t_data      data;
 }	t_philo;
 
 typedef struct s_data
 {
 	int			philos_num;
-	int			die_time;
-	int			eat_time;
-	int			sleep_time;
 	int			meal_num;
 	suseconds_t	start_time;
+	useconds_t	eat_time;
+	useconds_t	sleep_time;
+	useconds_t	die_time;
 	t_philo		*philos;
 	t_fork		*forks;
+    t_mtx       *print;
 }	t_data;
 
 //Functions

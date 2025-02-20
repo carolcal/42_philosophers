@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:33:19 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/12 17:42:47 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:47:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_data	*init_data(char *av[])
 		data->meal_num = ft_atoi(av[5]);
 	else
 		data->meal_num = -1;
-	data->start_time = 0;
+	data->start_time = get_time();
 	verify_args(data, av[5]);
 	data->forks = init_forks(data->philos_num);
 	data->philos = init_philos(data);
