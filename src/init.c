@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:33:19 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/20 17:47:14 by marvin           ###   ########.fr       */
+/*   Updated: 2025/02/24 15:42:04 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,14 @@ t_fork	*init_forks(int num)
 
 t_fork	*assign_fork(t_data *data, t_philo philo, char side)
 {
-	int		fork_id;
-	int		i;
+	int	fork_id;
 
-	i = 0;
-	if (side == 'l')
+	if (side == 'r')
 		fork_id = philo.id;
 	else
-	{
-		if (philo.id == 0)
-			fork_id = data->philos_num - 1;
-		else
-			fork_id = philo.id - 1;
-	}
-	while (i < data->philos_num)
-	{
-		if (data->forks[i].id == fork_id)
-			return (&data->forks[i]);
-		i++;
-	}
-	return (NULL);
+		fork_id = (philo.id + 1) % data->philos_num;
+
+	return (&data->forks[fork_id]);
 }
 
 t_philo	*init_philos(t_data *data)
@@ -66,9 +54,12 @@ t_philo	*init_philos(t_data *data)
 	while (i < data->philos_num)
 	{
 		philos[i].id = i;
+		philos[i].last_meal = 0;
 		philos[i].meals = 0;
 		philos[i].r_fork = assign_fork(data, philos[i], 'r');
 		philos[i].l_fork = assign_fork(data, philos[i], 'l');
+		pthread_mutex_init(&philos[i].state, NULL);
+		philos[i].data = data;
 		i++;
 	}
 	return (philos);
@@ -78,20 +69,28 @@ t_data	*init_data(char *av[])
 {
 	t_data			*data;
 
-	data = malloc(sizeof(data));
+	data = malloc(sizeof(t_data));
 	if (!data)
 		handle_error(MALLOC_FAILED);
 	data->philos_num = ft_atoi(av[1]);
 	data->die_time = ft_atoi(av[2]);
 	data->eat_time = ft_atoi(av[3]);
 	data->sleep_time = ft_atoi(av[4]);
-	if (av[5])
+	if (av[5] && verify_args(data, av[5]))
 		data->meal_num = ft_atoi(av[5]);
 	else
 		data->meal_num = -1;
-	data->start_time = get_time();
-	verify_args(data, av[5]);
+	pthread_mutex_init(&data->print, NULL);
 	data->forks = init_forks(data->philos_num);
-	data->philos = init_philos(data);
 	return (data);
+}
+
+t_philo *init(char *av[])
+{
+	t_data	*data;
+	t_philo *philos;
+
+	data = init_data(av);
+	philos = init_philos(data);
+	return (philos);
 }

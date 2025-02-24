@@ -6,7 +6,7 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:53:22 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/12 17:20:50 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:12:04 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void handle_error(char *err)
 	exit(EXIT_FAILURE);
 }
 
-void	verify_args(t_data *data, char *meal_num)
+int	verify_args(t_data *data, char *meal_num)
 {
 	if (data->philos_num < 1)
 		handle_error(PHILOS_NUM);
@@ -30,18 +30,19 @@ void	verify_args(t_data *data, char *meal_num)
 		handle_error(SLEEP_TIME);
 	if (meal_num && data->meal_num < 1)
 		handle_error(MEAL_NUM);
+	return (1);
 }
 
 int	main(int ac, char *av[])
 {
-	t_data	*data;
+	t_philo	*philos;
 
 	if (ac < 5 || ac > 6)
 		handle_error(ARGS);
 	else
 	{
-		data = init_data(av);
-		start_eating(data);
+		philos = init(av);
+		start(philos);
 	}
 	return (0);
 }

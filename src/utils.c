@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:20:57 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/20 17:50:12 by marvin           ###   ########.fr       */
+/*   Updated: 2025/02/24 18:51:38 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,27 @@ int	ft_atoi(const char *nptr)
 	return (num * sin);
 }
 
-int get_time()
+int	get_time(void)
 {
-	/*
-	struct timeval 
+	struct timeval		init;
+	static suseconds_t	init_time;
+	suseconds_t			curr_time;
+
+	gettimeofday(&init, NULL);
+	if (!init_time)
 	{
-		time_t		tv_sec; seconds
-		suseconds_t	tv_usec; microseconds
-	};
-	*/
-	//int gettimeofday(struct timeval *tv, struct timezone *tz);
-	struct timeval time;
-	
-	return (gettimeofday(timeval, NULL));
+		init_time = (init.tv_sec * 1000) + (init.tv_usec / 1000);
+		curr_time = init_time;
+	}
+	else
+		curr_time = (init.tv_sec * 1000) + (init.tv_usec / 1000);
+	return (curr_time - init_time);
 }
 
-void    print_action(t_philo *philo, char *action)
+void	print_action(t_philo *philo, char *action)
 {
-    int time;
+	int	time;
 
-    time = get_time();
-	//verificar como imprimir tempo
-    printf("%i %i %s", time, philo->id, action);
+	time = get_time();
+	printf("%i philo %i %s\n", time, philo->id, action);
 }

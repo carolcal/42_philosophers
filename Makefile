@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:32:34 by cayamash          #+#    #+#              #
-#    Updated: 2025/02/20 17:50:52 by marvin           ###   ########.fr        #
+#    Updated: 2025/02/24 12:36:55 by cayamash         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 #Executable
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(INCLUDES) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(INCLUDES) -o $(NAME)
 	@echo "$(GREEN)Compiled!$(END)"
 
 #Clean Object
