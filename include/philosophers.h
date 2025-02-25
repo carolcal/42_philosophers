@@ -6,7 +6,7 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:12 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/24 18:31:47 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:28:41 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 //Print Macros
 # define FORK "has taken a fork"
-# define EAT "is eating"
+# define EAT "\033[1;32mis eating\033[0m"
 # define SLEEP "is sleeping"
 # define THINK "is thinking"
 # define DIE "\033[1;31mdied\033[0m"
@@ -55,6 +55,7 @@ typedef struct s_data
 	int			eat_time;
 	int			sleep_time;
 	int			die_time;
+	int			stop;
 	t_fork		*forks;
 	t_mtx		print;
 }	t_data;
@@ -66,22 +67,28 @@ typedef struct s_philo
 	int			meals;
 	t_fork		*r_fork;
 	t_fork		*l_fork;
-	pthread_t	thread_id;
+	pthread_t	thread;
 	t_mtx		state;
 	t_data		*data;
 }	t_philo;
 
 
-//Functions
-int		ft_atoi(const char *nptr);
+//main
 void	handle_error(char *err);
 int		verify_args(t_data *data, char *meal_num);
-t_philo *init(char *av[]);
+//utils
+int		ft_atoi(const char *nptr);
 int		get_time(void);
 void	print_action(t_philo *philo, char *action);
+void	free_all(t_philo *philos);
+//init
+t_philo *init(char *av[]);
+//simulation
 void	start(t_philo *philos);
-int		stop(t_philo *philos);
+int		stop(t_philo *philos, int stop);
+//routine
 void	*routine(void *arg);
+//monitor
 void	*monitor(void *arg);
 
 #endif

@@ -12,7 +12,7 @@
 
 #include "philosophers.h"
 
-void	take_forks(t_philo *philo)
+static void	*take_forks(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
@@ -28,8 +28,10 @@ void	take_forks(t_philo *philo)
 		pthread_mutex_lock(&philo->l_fork->state);
 		print_action(philo, FORK);
 	}
+	return (NULL);
 }
-void	p_eat(t_philo *philo, int eat_time)
+
+static void	*eating(t_philo *philo, int eat_time)
 {
 	take_forks(philo);
 	pthread_mutex_lock(&philo->state);
@@ -40,33 +42,41 @@ void	p_eat(t_philo *philo, int eat_time)
 	usleep(eat_time * 1000);
 	pthread_mutex_unlock(&philo->l_fork->state);
 	pthread_mutex_unlock(&philo->r_fork->state);
+	return (NULL);
 }
 
-void	p_sleep(t_philo *philo, int sleep_time)
+static void	*sleeping(t_philo *philo, int sleep_time)
 {
-	print_action(philo, SLEEP);
-	usleep(sleep_time * 1000);
+	if (!stop(philo, 0))
+	{
+		print_action(philo, SLEEP);
+		usleep(sleep_time * 1000);
+	}
+	return (NULL);
 }
 
-void	p_think(t_philo *philo)
+static void	*thinking(t_philo *philo)
 {
-	print_action(philo, THINK);
-	while (1)
-		usleep(1);
+	if (!stop(philo, 0))
+	{
+		print_action(philo, THINK);
+		usleep(500);
+	}
+	return (NULL);
 }
 
 void	*routine(void *arg)
 {
-	t_philo *philos;
-	int	i;
+	t_philo	*philos;
+	int		i;
 
 	philos = (t_philo *)arg;
-	i = 0;
-	while (!stop(philos))
+	while (!stop(philos, 0))
 	{
-		p_eat(&philos[i], philos[i].data->eat_time);
-		p_sleep(&philos[i], philos[i].data->sleep_time);
-		p_think(&philos[i]);
+		i = 0;
+		eating(&philos[i], philos[i].data->eat_time);
+		sleeping(&philos[i], philos[i].data->sleep_time);
+		thinking(&philos[i]);
 		i++;
 	}
 	return (NULL);

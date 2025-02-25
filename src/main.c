@@ -6,7 +6,7 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:53:22 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/24 15:12:04 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:57:35 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	main(int ac, char *av[])
 	{
 		philos = init(av);
 		start(philos);
+		free_all(philos);
 	}
 	return (0);
 }

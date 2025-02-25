@@ -6,7 +6,7 @@
 #    By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:32:34 by cayamash          #+#    #+#              #
-#    Updated: 2025/02/24 12:36:55 by cayamash         ###   ########.fr        #
+#    Updated: 2025/02/25 10:07:08 by cayamash         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ OBJ_DIR = obj/
 INCLUDES = -I include/ -I src/ -I .
 
 #Source files and object file
-SRC = $(addprefix $(SRC_DIR), utils.c init.c start.c routine.c monitor.c main.c)
+SRC = $(addprefix $(SRC_DIR), utils.c init.c simulate.c routine.c monitor.c main.c)
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 #Valgrind

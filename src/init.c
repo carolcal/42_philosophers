@@ -6,7 +6,7 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:33:19 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/24 15:42:04 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:49:59 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,12 @@ t_data	*init_data(char *av[])
 	data->die_time = ft_atoi(av[2]);
 	data->eat_time = ft_atoi(av[3]);
 	data->sleep_time = ft_atoi(av[4]);
-	if (av[5] && verify_args(data, av[5]))
+	if (av[5])
 		data->meal_num = ft_atoi(av[5]);
 	else
 		data->meal_num = -1;
+	verify_args(data, av[5]);
+	data->stop = 0;
 	pthread_mutex_init(&data->print, NULL);
 	data->forks = init_forks(data->philos_num);
 	return (data);

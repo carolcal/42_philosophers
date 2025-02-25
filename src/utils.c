@@ -6,7 +6,7 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:20:57 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/24 18:51:38 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:28:15 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,34 @@ void	print_action(t_philo *philo, char *action)
 {
 	int	time;
 
-	time = get_time();
-	printf("%i philo %i %s\n", time, philo->id, action);
+	if (!stop(philo, 0))
+	{
+		time = get_time();
+		//pthread_mutex_lock(&philo->data->print);
+		printf("%i philo %i %s - %i\n", time, philo->id, action, philo->meals);
+		//pthread_mutex_unlock(&philo->data->print);
+	}
+}
+
+void	free_all(t_philo *philos)
+{
+	int		i;
+	int		num_philos;
+	t_data	*data;
+	t_fork	*forks;
+
+	i = 0;
+	num_philos = philos->data->philos_num;
+	data = philos->data;
+	forks = data->forks;
+	while (i < num_philos)
+	{
+		pthread_mutex_destroy(&forks[i].state);
+		pthread_mutex_destroy(&philos[i].state);
+		pthread_mutex_destroy(&data->print);
+		i++;
+	}
+	free(forks);
+	free(data);
+	free(philos);
 }
