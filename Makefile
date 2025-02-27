@@ -6,7 +6,7 @@
 #    By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:32:34 by cayamash          #+#    #+#              #
-#    Updated: 2025/02/27 12:39:52 by cayamash         ###   ########.fr        #
+#    Updated: 2025/02/27 14:22:40 by cayamash         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = philosophers
 
 #Compilers and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pthread -g3
+CFLAGS = -Wall -Wextra -Werror -pthread
 
 #Directories
 SRC_DIR = src/
