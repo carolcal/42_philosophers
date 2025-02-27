@@ -6,13 +6,13 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:53:22 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/25 10:57:35 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:02:58 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
 
-void handle_error(char *err)
+void	handle_error(char *err)
 {
 	printf("%s\n", err);
 	exit(EXIT_FAILURE);

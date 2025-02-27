@@ -6,7 +6,7 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 11:52:17 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/25 15:15:39 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:04:20 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	*monitor(void *arg)
 	t_philo	*philos;
 
 	philos = (t_philo *)arg;
-
 	while (!stop(philos, 0))
 	{
 		if (philos->data->meal_num > 0 && max_meals(philos))

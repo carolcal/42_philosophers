@@ -68,16 +68,19 @@ static void	*thinking(t_philo *philo)
 void	*routine(void *arg)
 {
 	t_philo	*philos;
-	int		i;
 
 	philos = (t_philo *)arg;
+	if (philos->data->philos_num == 1)
+	{
+		print_action(philos, FORK);
+		usleep(philos->data->eat_time * 1000);
+		return (NULL);
+	}
 	while (!stop(philos, 0))
 	{
-		i = 0;
-		eating(&philos[i], philos[i].data->eat_time);
-		sleeping(&philos[i], philos[i].data->sleep_time);
-		thinking(&philos[i]);
-		i++;
+		eating(philos, philos->data->eat_time);
+		sleeping(philos, philos->data->sleep_time);
+		thinking(philos);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:12 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/25 15:28:41 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:04:27 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct s_philo
 	t_data		*data;
 }	t_philo;
 
-
 //main
 void	handle_error(char *err);
 int		verify_args(t_data *data, char *meal_num);
@@ -82,7 +81,7 @@ int		get_time(void);
 void	print_action(t_philo *philo, char *action);
 void	free_all(t_philo *philos);
 //init
-t_philo *init(char *av[]);
+t_philo	*init(char *av[]);
 //simulation
 void	start(t_philo *philos);
 int		stop(t_philo *philos, int stop);

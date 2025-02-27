@@ -6,7 +6,7 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:33:19 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/25 14:49:59 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:46:42 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_fork	*assign_fork(t_data *data, t_philo philo, char side)
 		fork_id = philo.id;
 	else
 		fork_id = (philo.id + 1) % data->philos_num;
-
 	return (&data->forks[fork_id]);
 }
 
@@ -87,10 +86,10 @@ t_data	*init_data(char *av[])
 	return (data);
 }
 
-t_philo *init(char *av[])
+t_philo	*init(char *av[])
 {
 	t_data	*data;
-	t_philo *philos;
+	t_philo	*philos;
 
 	data = init_data(av);
 	philos = init_philos(data);
