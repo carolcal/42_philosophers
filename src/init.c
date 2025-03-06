@@ -6,13 +6,13 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:33:19 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/27 12:46:42 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:54:02 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_fork	*init_forks(int num)
+static t_fork	*init_forks(int num)
 {
 	t_fork	*forks;
 	int		i;
@@ -30,7 +30,7 @@ t_fork	*init_forks(int num)
 	return (forks);
 }
 
-t_fork	*assign_fork(t_data *data, t_philo philo, char side)
+static t_fork	*assign_fork(t_data *data, t_philo philo, char side)
 {
 	int	fork_id;
 
@@ -41,7 +41,7 @@ t_fork	*assign_fork(t_data *data, t_philo philo, char side)
 	return (&data->forks[fork_id]);
 }
 
-t_philo	*init_philos(t_data *data)
+static t_philo	*init_philos(t_data *data)
 {
 	int		i;
 	t_philo	*philos;
@@ -64,7 +64,7 @@ t_philo	*init_philos(t_data *data)
 	return (philos);
 }
 
-t_data	*init_data(char *av[])
+static t_data	*init_data(char *av[])
 {
 	t_data			*data;
 
@@ -75,13 +75,15 @@ t_data	*init_data(char *av[])
 	data->die_time = ft_atoi(av[2]);
 	data->eat_time = ft_atoi(av[3]);
 	data->sleep_time = ft_atoi(av[4]);
+	data->init_time = 0;
 	if (av[5])
-		data->meal_num = ft_atoi(av[5]);
+	data->meal_num = ft_atoi(av[5]);
 	else
-		data->meal_num = -1;
+	data->meal_num = -1;
 	verify_args(data, av[5]);
-	data->stop = 0;
-	pthread_mutex_init(&data->print, NULL);
+	data->flag = 0;
+	pthread_mutex_init(&data->state, NULL);
+	data->init_time = get_time(data);
 	data->forks = init_forks(data->philos_num);
 	return (data);
 }

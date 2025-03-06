@@ -6,13 +6,13 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:51:07 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/25 14:29:37 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:41:03 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	start_threads(t_philo *philos, pthread_t *monitoring)
+static void	start_threads(t_philo *philos, pthread_t *monitoring)
 {
 	int				i;
 
@@ -27,7 +27,7 @@ void	start_threads(t_philo *philos, pthread_t *monitoring)
 		handle_error(THREAD_CREATE);
 }
 
-void	join_threads(t_philo *philos, pthread_t monitoring)
+static void	join_threads(t_philo *philos, pthread_t monitoring)
 {
 	int	i;
 
@@ -52,8 +52,10 @@ int	stop(t_philo *philos, int stop)
 {
 	int	flag;
 
+	pthread_mutex_lock(&philos->data->state);
 	if (stop)
-		philos->data->stop = 1;
-	flag = philos->data->stop;
+		philos->data->flag = 1;
+	flag = philos->data->flag;
+	pthread_mutex_unlock(&philos->data->state);
 	return (flag);
 }

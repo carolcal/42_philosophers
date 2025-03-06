@@ -35,7 +35,7 @@ static void	*eating(t_philo *philo, int eat_time)
 {
 	take_forks(philo);
 	pthread_mutex_lock(&philo->state);
-	philo->last_meal = get_time();
+	philo->last_meal = get_time(philo->data);
 	print_action(philo, EAT);
 	philo->meals++;
 	pthread_mutex_unlock(&philo->state);

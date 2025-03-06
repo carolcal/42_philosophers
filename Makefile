@@ -6,15 +6,15 @@
 #    By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 15:32:34 by cayamash          #+#    #+#              #
-#    Updated: 2025/02/27 14:22:40 by cayamash         ###   ########.fr        #
+#    Updated: 2025/03/06 15:55:03 by cayamash         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #Name of the program
-NAME = philosophers
+NAME = philo
 
 #Compilers and flags
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread
 
 #Directories
@@ -27,7 +27,8 @@ SRC = $(addprefix $(SRC_DIR), utils.c init.c simulate.c routine.c monitor.c main
 OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 #Valgrind
-VALGRIND = 	valgrind --leak-check=fill --track-origind=yes --show-leak-kinds=all
+LEAK = valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all
+RACE = valgrind -q --tool=helgrind
 
 #Style
 NO_PRINT = --no-print-directory
@@ -37,7 +38,11 @@ END = \033[0m
 #Rules
 all: $(NAME)
 
-val: $(VALGRIND) ./$(NAME) > valgrind.log 2>&1
+val: $(NAME)
+	@$(LEAK) ./$(NAME) 1 800 200 200 > valgrind.log 2>&1
+
+race: $(NAME)
+	@$(RACE) ./$(NAME) 4 800 200 200 > valgrind.log 2>&1
 
 norm:
 	@echo "\n$(MAGENTA)======= SRC =======$(END)"

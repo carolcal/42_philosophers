@@ -6,13 +6,13 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 11:52:17 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/27 11:04:20 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:22:08 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	max_meals(t_philo *philos)
+static int	max_meals(t_philo *philos)
 {
 	int	i;
 	int	n_philos;
@@ -35,7 +35,7 @@ int	max_meals(t_philo *philos)
 	return (1);
 }
 
-int	starvation(t_philo *philos)
+static int	starvation(t_philo *philos)
 {
 	int	i;
 	int	n_philos;
@@ -45,7 +45,7 @@ int	starvation(t_philo *philos)
 	i = 0;
 	n_philos = philos->data->philos_num;
 	die_time = philos->data->die_time;
-	now = get_time();
+	now = get_time(philos->data);
 	while (i < n_philos)
 	{
 		pthread_mutex_lock(&philos[i].state);

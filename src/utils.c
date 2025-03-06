@@ -6,7 +6,7 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:20:57 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/27 12:47:15 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:51:44 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,27 @@ int	ft_atoi(const char *nptr)
 	return (num * sin);
 }
 
-int	get_time(void)
+int	get_time(t_data *data)
 {
 	struct timeval		init;
-	static suseconds_t	init_time;
+	suseconds_t			init_time;
 	suseconds_t			curr_time;
 
 	gettimeofday(&init, NULL);
-	if (!init_time)
+	pthread_mutex_lock(&data->state);
+	if (!data->init_time)
 	{
 		init_time = (init.tv_sec * 1000) + (init.tv_usec / 1000);
-		curr_time = init_time;
+		pthread_mutex_unlock(&data->state);
+		return (init_time);
 	}
 	else
+	{
+		init_time = data->init_time;
 		curr_time = (init.tv_sec * 1000) + (init.tv_usec / 1000);
-	return (curr_time - init_time);
+		pthread_mutex_unlock(&data->state);
+		return (curr_time - init_time);
+	}
 }
 
 void	print_action(t_philo *philo, char *action)
@@ -59,8 +65,10 @@ void	print_action(t_philo *philo, char *action)
 
 	if (!stop(philo, 0))
 	{
-		time = get_time();
+		time = get_time(philo->data);
+		pthread_mutex_lock(&philo->data->state);
 		printf("%i philo %i %s\n", time, philo->id + 1, action);
+		pthread_mutex_unlock(&philo->data->state);
 	}
 }
 
@@ -79,9 +87,9 @@ void	free_all(t_philo *philos)
 	{
 		pthread_mutex_destroy(&forks[i].state);
 		pthread_mutex_destroy(&philos[i].state);
-		pthread_mutex_destroy(&data->print);
 		i++;
 	}
+	pthread_mutex_destroy(&data->state);
 	free(forks);
 	free(data);
 	free(philos);

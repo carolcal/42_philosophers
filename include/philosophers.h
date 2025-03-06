@@ -6,7 +6,7 @@
 /*   By: cayamash <cayamash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:16:12 by cayamash          #+#    #+#             */
-/*   Updated: 2025/02/27 11:04:27 by cayamash         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:20:24 by cayamash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ typedef struct s_data
 	int			eat_time;
 	int			sleep_time;
 	int			die_time;
-	int			stop;
+	suseconds_t	init_time;
+	int			flag;
 	t_fork		*forks;
-	t_mtx		print;
+	t_mtx		state;
 }	t_data;
 
 typedef struct s_philo
@@ -77,7 +78,7 @@ void	handle_error(char *err);
 int		verify_args(t_data *data, char *meal_num);
 //utils
 int		ft_atoi(const char *nptr);
-int		get_time(void);
+int		get_time(t_data *data);
 void	print_action(t_philo *philo, char *action);
 void	free_all(t_philo *philos);
 //init
