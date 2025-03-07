@@ -74,4 +74,4 @@ fclean: clean
 #Recompile everything
 re: fclean all
 
-PHONY: all clean fclean re val norm
+PHONY: all clean fclean re val race norm
