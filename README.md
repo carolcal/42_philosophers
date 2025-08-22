@@ -34,7 +34,7 @@ Expected log [REVIEW]
 ## Implementation Details
 1. #### Threads & Mutexes
 - Each philosopher is implemented as a thread.
-- Forks are represented by pthread_mutex_t, one per philosopher.
+- Forks have each a `status` are represented by `pthread_mutex_t`, one per philosopher.
 - Philosophers must lock both adjacent forks before eating and unlock them afterward to prevent race conditions.
 
 2. #### Avoiding Deadlocks
